@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">ProjectTwo</string>
+    <string name="firefighter_icon">Firefighter Icon</string>
+    <string name="fire_department_event_tracker">Fire Department Event Tracker</string>
+    <string name="log_in_to_continue">Log in to continue</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="create_account">Create Account</string>
+    <string name="new_users_message">New users? Create an account above.</string>
+
+    <!-- MainActivity -->
+    <string name="event_tracker_subtitle">Add, view, and manage department events</string>
+    <string name="sms_settings">SMS Settings</string>
+    <string name="add_event">Add Event</string>
+    <string name="event_name">Event name</string>
+    <string name="event_date">Event date (MM/DD/YYYY)</string>
+    <string name="event_location">Location or notes</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="event_details_format">Date: %1$s, Location: %2$s</string>
+
+    <!-- SmsActivity -->
+    <string name="sms_notifications_title">SMS Notifications</string>
+    <string name="sms_notifications_description">This app can send SMS alerts for upcoming events and important updates. You can allow SMS access now, or continue using the app without notifications.</string>
+    <string name="example_alert">Example alert, Training drill starts in 2 hours.</string>
+    <string name="allow_sms_notifications">Allow SMS Notifications</string>
+    <string name="not_now">Not Now</string>
+    <string name="sms_status_on">Status, SMS notifications are ON.</string>
+    <string name="sms_status_off">Status, SMS notifications are OFF until permission is granted.</string>
+    <string name="delete_event">Delete event</string>
 </resources>

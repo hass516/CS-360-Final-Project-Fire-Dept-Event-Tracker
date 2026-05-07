@@ -12,8 +12,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername;
     private EditText etPassword;
-    private Button btnLogin;
-    private Button btnCreateAccount;
 
     private DatabaseHelper db;
 
@@ -24,8 +22,8 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
 
         db = new DatabaseHelper(this);
 

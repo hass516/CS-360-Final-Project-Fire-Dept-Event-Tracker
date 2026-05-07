@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
     private EditText etEventName;
     private EditText etEventDate;
     private EditText etEventLocation;
-    private Button btnAddEvent;
 
     private RecyclerView rvEvents;
 
@@ -29,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
 
     private static final String PREFS_NAME = "app_prefs";
     private static final String KEY_SMS_ENABLED = "sms_enabled";
+    private static final String DEMO_PHONE_NUMBER = "5551234567";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
         etEventName = findViewById(R.id.etEventName);
         etEventDate = findViewById(R.id.etEventDate);
         etEventLocation = findViewById(R.id.etEventLocation);
-        btnAddEvent = findViewById(R.id.btnAddEvent);
+        Button btnAddEvent = findViewById(R.id.btnAddEvent);
 
         rvEvents = findViewById(R.id.rvEvents);
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
             Toast.makeText(this, "Event added.", Toast.LENGTH_SHORT).show();
 
             // 🔹 DEMO SMS trigger for grading
-            sendSmsIfAllowed("5551234567",
+            sendSmsIfAllowed(DEMO_PHONE_NUMBER,
                     "Event added: " + title + " on " + date);
 
             etEventName.setText("");
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
         return prefs.getBoolean(KEY_SMS_ENABLED, false);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void sendSmsIfAllowed(String phoneNumber, String message) {
         if (!isSmsEnabled()) {
             Toast.makeText(this, "SMS is off. Enable it in SMS settings.", Toast.LENGTH_SHORT).show();
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
         }
 
         try {
-            android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+            android.telephony.SmsManager smsManager = getSystemService(android.telephony.SmsManager.class);
             smsManager.sendTextMessage(phoneNumber, null, message, null, null);
             Toast.makeText(this, "SMS sent.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

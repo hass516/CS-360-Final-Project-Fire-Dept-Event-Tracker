@@ -73,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteEvent(int eventId) {
         SQLiteDatabase db = getWritableDatabase();
-        int rows = db.delete(TABLE_EVENTS, COL_EVENT_ID + "=?", new String[]{String.valueOf(eventId)});
+        int rows = db.delete(TABLE_EVENTS, COL_EVENT_ID + "=?", new String[]{eventId + ""});
         return rows > 0;
     }
 
@@ -85,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_EVENT_DATE, date);
         values.put(COL_EVENT_LOCATION, location);
 
-        int rows = db.update(TABLE_EVENTS, values, COL_EVENT_ID + "=?", new String[]{String.valueOf(eventId)});
+        int rows = db.update(TABLE_EVENTS, values, COL_EVENT_ID + "=?", new String[]{eventId + ""});
         return rows > 0;
     }
     @Override

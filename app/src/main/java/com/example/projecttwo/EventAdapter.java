@@ -45,7 +45,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         Event event = events.get(position);
 
         holder.tvEventName.setText(event.getTitle());
-        holder.tvEventDetails.setText("Date: " + event.getDate() + ", Location: " + event.getLocation());
+        String details = context.getString(R.string.event_details_format, event.getDate(), event.getLocation());
+        holder.tvEventDetails.setText(details);
 
         holder.btnDelete.setOnClickListener(v -> {
             boolean deleted = db.deleteEvent(event.getId());
@@ -68,11 +69,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     private void showEditDialog(Event event) {
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_event, null);
 
-        EditText etTitle = dialogView.findViewById(R.id.etEditTitle);
+        EditText etName = dialogView.findViewById(R.id.etEditName);
         EditText etDate = dialogView.findViewById(R.id.etEditDate);
         EditText etLocation = dialogView.findViewById(R.id.etEditLocation);
 
-        etTitle.setText(event.getTitle());
+        etName.setText(event.getTitle());
         etDate.setText(event.getDate());
         etLocation.setText(event.getLocation());
 
@@ -80,7 +81,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 .setTitle("Edit Event")
                 .setView(dialogView)
                 .setPositiveButton("Save", (dialog, which) -> {
-                    String newTitle = etTitle.getText().toString().trim();
+                    String newTitle = etName.getText().toString().trim();
                     String newDate = etDate.getText().toString().trim();
                     String newLocation = etLocation.getText().toString().trim();
 
@@ -101,7 +102,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 .show();
     }
 
-    static class EventViewHolder extends RecyclerView.ViewHolder {
+    public static class EventViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvEventName;
         TextView tvEventDetails;

@@ -20,8 +20,6 @@ public class SmsActivity extends AppCompatActivity {
     private static final String KEY_SMS_ENABLED = "sms_enabled";
 
     private TextView tvSmsStatus;
-    private Button btnAllowSms;
-    private Button btnDenySms;
 
     private SharedPreferences prefs;
 
@@ -31,8 +29,8 @@ public class SmsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sms);
 
         tvSmsStatus = findViewById(R.id.tvSmsStatus);
-        btnAllowSms = findViewById(R.id.btnAllowSms);
-        btnDenySms = findViewById(R.id.btnDenySms);
+        Button btnAllowSms = findViewById(R.id.btnAllowSms);
+        Button btnDenySms = findViewById(R.id.btnDenySms);
 
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
@@ -46,6 +44,7 @@ public class SmsActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressWarnings("IfCanBeSwitch")
     private void requestSmsPermission() {
         // If already granted, just enable SMS
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
@@ -72,13 +71,14 @@ public class SmsActivity extends AppCompatActivity {
     private void updateStatusText() {
         boolean enabled = prefs.getBoolean(KEY_SMS_ENABLED, false);
         if (enabled) {
-            tvSmsStatus.setText("Status, SMS notifications are ON.");
+            tvSmsStatus.setText(getString(R.string.sms_status_on));
         } else {
-            tvSmsStatus.setText("Status, SMS notifications are OFF until permission is granted.");
+            tvSmsStatus.setText(getString(R.string.sms_status_off));
         }
     }
 
     @Override
+    @SuppressWarnings("IfCanBeSwitch")
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 

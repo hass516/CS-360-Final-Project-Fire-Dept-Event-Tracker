@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -16,9 +17,9 @@
             android:id="@+id/tvEventName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Monthly Training Drill"
             android:textStyle="bold"
             android:textSize="16sp"
+            tools:text="Monthly Training Drill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnDeleteEvent" />
@@ -27,22 +28,23 @@
             android:id="@+id/tvEventDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Date: 03/12/2026, Location: Station 1"
             android:textSize="13sp"
             android:layout_marginTop="4dp"
+            tools:text="Date: 03/12/2026, Location: Station 1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvEventName"
             app:layout_constraintEnd_toStartOf="@id/btnDeleteEvent" />
 
         <ImageButton
             android:id="@+id/btnDeleteEvent"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="Delete event"
-            android:background="@android:color/transparent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/delete_event"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
