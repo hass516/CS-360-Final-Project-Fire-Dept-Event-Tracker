@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Fire Department Theme Colors -->
+
+    <color name="red_primary">#C62828</color>
+    <color name="red_dark">#8E0000</color>
+    <color name="red_light">#FF5F52</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="gray_dark">#333333</color>
+    <color name="gray_light">#DDDDDD</color>
 </resources>

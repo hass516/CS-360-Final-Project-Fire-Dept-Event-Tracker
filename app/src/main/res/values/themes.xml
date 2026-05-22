@@ -1,9 +1,27 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Base.Theme.ProjectTwo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="colorPrimary">@color/red_primary</item>
+        <item name="colorPrimaryVariant">@color/red_dark</item>
+        <item name="colorSecondary">@color/red_light</item>
+
+        <!-- Material3 container colors -->
+        <item name="colorPrimaryContainer">@color/red_primary</item>
+        <item name="colorSecondaryContainer">@color/red_dark</item>
+
+        <!-- System UI -->
+        <item name="android:statusBarColor">@color/red_dark</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/black</item>
+
     </style>
 
     <style name="Theme.ProjectTwo" parent="Base.Theme.ProjectTwo" />
+
 </resources>

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">ProjectTwo</string>
+
+    <!-- LoginActivity -->
+    <string name="app_logo">Fire Department Event Tracker logo</string>
     <string name="firefighter_icon">Firefighter Icon</string>
     <string name="fire_department_event_tracker">Fire Department Event Tracker</string>
     <string name="log_in_to_continue">Log in to continue</string>

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Login screen for the Fire Department Event Tracker app.
+    This layout supports user login and account creation.
+    ConstraintLayout is used so the screen can scale better across different device sizes.
+-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,17 +14,25 @@
     android:padding="24dp"
     tools:context=".LoginActivity">
 
+    <!--
+        App logo/icon displayed at the top of the login screen.
+        contentDescription supports accessibility for screen reader users.
+    -->
     <ImageView
         android:id="@+id/ivFireIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="16dp"
-        android:src="@android:drawable/ic_menu_compass"
-        android:contentDescription="@string/firefighter_icon"
+        android:src="@drawable/fd_logo"
+        android:contentDescription="@string/app_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Main application title.
+        Text is referenced from strings.xml to avoid hardcoded text.
+    -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
@@ -31,6 +45,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Short instruction text explaining the purpose of the screen.
+    -->
     <TextView
         android:id="@+id/tvSubtitle"
         android:layout_width="0dp"
@@ -43,6 +60,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Username input field.
+        48dp height improves touch accessibility.
+        autofillHints allows Android credential autofill to assist the user.
+        Uses dynamic Material theme colors so text automatically
+        changes between light and dark mode.
+    -->
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="0dp"
@@ -50,14 +74,20 @@
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:autofillHints="username"
-        android:textColor="@android:color/black"
-        android:textColorHint="#666666"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="?attr/colorOnSurfaceVariant"
         android:padding="12dp"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Password input field.
+        inputType masks the password, and autofillHints supports password managers.
+        Uses dynamic Material theme colors so text automatically
+        changes between light and dark mode.
+    -->
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="0dp"
@@ -65,14 +95,18 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:autofillHints="password"
-        android:textColor="@android:color/black"
-        android:textColorHint="#666666"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="?attr/colorOnSurfaceVariant"
         android:padding="12dp"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/etUsername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Login button for existing users.
+        48dp height provides a larger and more accessible tap target.
+    -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
@@ -83,6 +117,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Account creation button for new users.
+    -->
     <Button
         android:id="@+id/btnCreateAccount"
         android:layout_width="0dp"
@@ -93,6 +130,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Helper text explaining that new users can create an account from this screen.
+    -->
     <TextView
         android:id="@+id/tvHelper"
         android:layout_width="0dp"
