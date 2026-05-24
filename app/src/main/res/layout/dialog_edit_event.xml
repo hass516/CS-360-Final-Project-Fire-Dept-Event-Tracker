@@ -26,6 +26,16 @@
         android:layout_marginTop="8dp" />
 
     <EditText
+        android:id="@+id/etEditTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="Event time (HH:MM AM/PM)"
+        android:inputType="time"
+        android:importantForAutofill="no"
+        android:layout_marginTop="8dp" />
+
+    <EditText
         android:id="@+id/etEditLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

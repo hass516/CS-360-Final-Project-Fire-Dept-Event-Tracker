@@ -18,9 +18,11 @@
     <string name="add_event">Add Event</string>
     <string name="event_name">Event name</string>
     <string name="event_date">Event date (MM/DD/YYYY)</string>
+    <string name="event_time">Event time (HH:MM AM/PM)</string>
     <string name="event_location">Location or notes</string>
     <string name="upcoming_events">Upcoming Events</string>
-    <string name="event_details_format">Date: %1$s, Location: %2$s</string>
+    <string name="event_details_format">Date: %1$s\nTime: %2$s\nLocation: %3$s</string>
+    <string name="no_upcoming_events">No upcoming events scheduled.</string>
 
     <!-- SmsActivity -->
     <string name="sms_notifications_title">SMS Notifications</string>
