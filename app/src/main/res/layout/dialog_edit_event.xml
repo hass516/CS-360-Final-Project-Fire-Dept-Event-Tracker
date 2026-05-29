@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:hint="Event time (HH:MM AM/PM)"
+        android:hint="@string/event_time"
         android:inputType="time"
         android:importantForAutofill="no"
         android:layout_marginTop="8dp" />

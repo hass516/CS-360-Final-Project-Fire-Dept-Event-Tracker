@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.view.View;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -23,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class MainActivity extends AppCompatActivity implements EventAdapter.OnDataChangedListener {
@@ -47,8 +51,11 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
     private EditText etEventDate;
     private EditText etEventTime;
     private EditText etEventLocation;
+    private EditText etSearchEvents;
 
     private TextView tvEmptyEvents;
+
+
 
     // RecyclerView displays saved events
     private RecyclerView rvEvents;
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
         etEventDate = findViewById(R.id.etEventDate);
         etEventTime = findViewById(R.id.etEventTime);
         etEventLocation = findViewById(R.id.etEventLocation);
+        etSearchEvents = findViewById(R.id.etSearchEvents);
 
         Button btnAddEvent = findViewById(R.id.btnAddEvent);
 
@@ -103,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
 
         // Load saved events when the screen opens
         loadEvents();
+        setupSearchListener();
 
         // Add event when the user taps the Add Event button
         btnAddEvent.setOnClickListener(v -> addEvent());
@@ -226,6 +235,12 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
 
             Date enteredDate = sdf.parse(date);
 
+            if (enteredDate == null) {
+                etEventDate.setError("Invalid date.");
+                etEventDate.requestFocus();
+                return false;
+            }
+
             Calendar enteredCalendar = Calendar.getInstance();
             enteredCalendar.setTime(enteredDate);
             resetTimeToStartOfDay(enteredCalendar);
@@ -283,17 +298,128 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnDa
     }
 
     /*
-        Loads all events from the database and displays them in the RecyclerView.
-     */
+    Loads all events from the database, applies search filtering,
+    updates the empty state message, and refreshes the RecyclerView.
+
+    This method supports the Algorithms and Data Structures enhancement
+    by processing the ArrayList of events dynamically before display.
+    */
     private void loadEvents() {
         List<Event> events = db.getAllEvents();
+
+        String query = "";
+        if (etSearchEvents != null) {
+            query = etSearchEvents.getText().toString().trim();
+        }
+
+        List<Event> filteredEvents = filterEvents(events, query);
+        sortEventsByDateTime(filteredEvents);
+        updateEmptyState(filteredEvents);
+
+        EventAdapter adapter = new EventAdapter(this, filteredEvents, db, this);
+        rvEvents.setAdapter(adapter);
+    }
+    /*
+    Sets up the search field so the RecyclerView updates as the user types.
+    This supports the algorithms and data structures enhancement by processing
+    the List<Event> dynamically before displaying it.
+ */
+    private void setupSearchListener() {
+        etSearchEvents.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No action needed before text changes.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                loadEvents();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // No action needed after text changes.
+            }
+        });
+    }
+
+    /*
+        Filters events by checking whether the search query appears in the title,
+        date, time, or location fields.
+     */
+    private List<Event> filterEvents(List<Event> events, String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return events;
+        }
+
+        String normalizedQuery = query.toLowerCase(Locale.US);
+        List<Event> filteredEvents = new ArrayList<>();
+
+        for (Event event : events) {
+            String searchableText =
+                    event.getTitle() + " " +
+                            event.getDate() + " " +
+                            event.getTime() + " " +
+                            event.getLocation();
+
+            if (searchableText.toLowerCase(Locale.US).contains(normalizedQuery)) {
+                filteredEvents.add(event);
+            }
+        }
+
+        return filteredEvents;
+    }
+
+    /*
+    Sorts events by scheduled date and time so the soonest upcoming event
+    appears first. Sorting improves the usefulness of the RecyclerView by
+    organizing events according to their scheduled occurrence.
+
+    This uses comparator-based sorting, which typically operates in O(n log n)
+    time complexity.
+ */
+    private void sortEventsByDateTime(List<Event> events) {
+        Collections.sort(events, (eventOne, eventTwo) -> {
+            Date firstDate = parseEventDateTime(eventOne);
+            Date secondDate = parseEventDateTime(eventTwo);
+
+            return firstDate.compareTo(secondDate);
+        });
+    }
+
+    /*
+    Converts an Event object's date and time strings into a Date object
+    so events can be compared and sorted chronologically.
+ */
+    private Date parseEventDateTime(Event event) {
+        try {
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
+
+            String dateTimeText = event.getDate() + " " + event.getTime();
+
+            Date parsedDate = sdf.parse(dateTimeText);
+
+            if (parsedDate != null) {
+                return parsedDate;
+            }
+
+        } catch (ParseException e) {
+            // If parsing fails, place invalid records at the end of the list.
+        }
+
+        return new Date(Long.MAX_VALUE);
+    }
+
+    /*
+        Shows the empty state message when there are no matching events.
+     */
+    private void updateEmptyState(List<Event> events) {
         if (events.isEmpty()) {
             tvEmptyEvents.setVisibility(View.VISIBLE);
         } else {
             tvEmptyEvents.setVisibility(View.GONE);
         }
-        EventAdapter adapter = new EventAdapter(this, events, db, this);
-        rvEvents.setAdapter(adapter);
     }
 
     /*
