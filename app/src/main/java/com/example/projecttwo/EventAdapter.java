@@ -57,8 +57,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.tvEventName.setText(event.getTitle());
 
         /*
-            Display event date, time, and location.
-            Including time makes each event record more complete and useful.
+            Display event date, time, location, and database status.
+
+            Status was added during the Database enhancement so the user can
+            see whether an event is Upcoming, Completed, or Archived.
          */
         String details = context.getString(
                 R.string.event_details_format,
@@ -66,6 +68,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 event.getTime(),
                 event.getLocation()
         );
+
+        details = details + "\nStatus: " + event.getStatus();
 
         holder.tvEventDetails.setText(details);
 
@@ -84,8 +88,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             }
         });
 
-        // Tapping an event row opens the edit dialog
+        // Tapping an event row opens the edit dialog.
         holder.itemView.setOnClickListener(v -> showEditDialog(event));
+
+        /*
+            Long-pressing an event row opens status management options.
+            This supports the Database enhancement by allowing status updates
+            without deleting the event record from SQLite.
+         */
+        holder.itemView.setOnLongClickListener(v -> {
+            showStatusDialog(event);
+            return true;
+        });
     }
 
     @Override
@@ -148,7 +162,56 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     /*
+        Opens a dialog that allows the user to update event status.
+
+        This Database enhancement improves data lifecycle management by letting
+        event records remain in SQLite while being marked as Upcoming,
+        Completed, or Archived.
+     */
+    private void showStatusDialog(Event event) {
+
+        String[] statusOptions = {
+                DatabaseHelper.STATUS_UPCOMING,
+                DatabaseHelper.STATUS_COMPLETED,
+                DatabaseHelper.STATUS_ARCHIVED
+        };
+
+        new AlertDialog.Builder(context)
+                .setTitle("Update Event Status")
+                .setItems(statusOptions, (dialog, which) -> {
+
+                    String selectedStatus = statusOptions[which];
+
+                    boolean updated = db.updateEventStatus(
+                            event.getId(),
+                            selectedStatus
+                    );
+
+                    if (updated) {
+                        Toast.makeText(
+                                context,
+                                "Event marked as " + selectedStatus + ".",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        listener.onDataChanged();
+
+                    } else {
+                        Toast.makeText(
+                                context,
+                                "Status update failed.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    /*
         ViewHolder stores references to row views for better RecyclerView performance.
+        RecyclerView reuses these references instead of repeatedly searching
+        the layout for each view.
      */
     public static class EventViewHolder extends RecyclerView.ViewHolder {
 
