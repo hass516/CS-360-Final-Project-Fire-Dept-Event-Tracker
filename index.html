@@ -250,6 +250,8 @@
         <li>RecyclerView event card improvements</li>
         <li>SQLite schema update for event time storage</li>
         <li>Reusable helper methods and improved maintainability</li>
+        <li>Event lifecycle status tracking</li>
+        <li>Persistent SQLite status updates</li>
     </ul>
 
     <br>
@@ -398,8 +400,43 @@
         <li>Dynamic RecyclerView updates based on filtered and sorted data</li>
         <li>Improved maintainability using reusable helper methods</li>
     </ul>
+    </div>
+    <div class="card">
 
-</div>
+    <h3>Category Three: Databases</h3>
+    <p>
+        The third enhancement focused on improving how the application
+        stores, updates, and manages event records in SQLite.
+        This enhancement moved the application beyond basic event creation
+        and deletion by adding event lifecycle tracking.
+    </p>
+    <br>
+    <p>
+        I updated the SQLite database schema by adding a new event status
+        column and increasing the database version. Event records can now be
+        stored as Upcoming, Completed, or Archived. This allows the application
+        to preserve event history instead of relying only on permanent deletion.
+    </p>
+    <br>
+    <p>
+        The Event model, DatabaseHelper, and RecyclerView adapter were updated
+        so status values can be written to the database, read back from SQLite,
+        displayed in the event list, and updated through a long-press status
+        management dialog.
+    </p>
+    <br>
+    <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>SQLite schema enhancement with event status column</li>
+        <li>Database version upgrade</li>
+        <li>Event lifecycle tracking</li>
+        <li>Status values for Upcoming, Completed, and Archived</li>
+        <li>Persistent status updates stored in SQLite</li>
+        <li>DatabaseHelper update method for event status management</li>
+        <li>RecyclerView display of database status values</li>
+        <li>Long-press status update dialog</li>
+    </ul>
+    </div>
+    
     </section>
    <section id="screenshots">
 
